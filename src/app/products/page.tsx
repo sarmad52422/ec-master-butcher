@@ -2,9 +2,8 @@
 import Divider from "@/components/divider/divider";
 import HeroSection from "@/components/hero_section/hero_section";
 import ProductGrid from "@/components/product/product_grid";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
 import React from "react";
-import { useAppSelector } from "@/redux/hooks";
-import SearchBar from "@/components/navbar/components/search_bar";
 
 interface Product {
   id: number;
@@ -12,9 +11,11 @@ interface Product {
   image?: string;
   price: number;
 }
-const Home: React.FC = () => {
-  const authState = useAppSelector((state) => state.BasicActionsReducer);
-  console.log(authState);
+const Product: React.FC = () => {
+  const params = useSearchParams();
+  const category = params.get("category");
+
+  console.log(params.get("category"));
   const dummyProducts: Product[] = [
     {
       id: 1,
@@ -84,11 +85,11 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <HeroSection />
-      <Divider content="Tranding Products" />
+      {/* <HeroSection /> */}
+      <Divider content={category} />
       <ProductGrid products={dummyProducts} />
     </div>
   );
 };
 
-export default Home;
+export default Product;
