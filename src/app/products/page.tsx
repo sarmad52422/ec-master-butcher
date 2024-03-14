@@ -84,7 +84,7 @@ const Product: React.FC = () => {
   ];
 
   return (
-    <div>
+    <div className="mt-36">
       {/* <HeroSection /> */}
       <Divider content={category} />
       <ProductGrid products={dummyProducts} />
