@@ -1,4 +1,5 @@
 // import { OrderComponent } from "@/app/admin/components/OrdersComponent/order_component";
+import { Product } from "@/components/product/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { JsxElement } from "typescript";
 export const OrderPageName:string = "OrderPage";
@@ -18,6 +19,13 @@ const initialAdminState: AdminActionType = {
   orderSearchValue: "",
   CurrentCompoent:OrderPageName
 };
+interface CartItems {
+  itemId:string;
+
+}
+const initiCartState:CartItems = {
+  itemId:""
+}
 
 export const NavActions = createSlice({
   name: "nav_actions",
@@ -42,7 +50,20 @@ export const BasicAction = createSlice({
     }
   },
 });
+export const CartActions = createSlice({
+  name: "cart_actions",
+  initialState: initiCartState,
+  reducers: {
+    reset: () => initiCartState,
+    onItemAdded: (state, action: PayloadAction<string>) => {
+      state.itemId = action.payload;
+    }
+  },
+});
+
 export const { hideNavbar } = NavActions.actions;
 export const { onOrderValueSearched,onComponentChanged } = BasicAction.actions;
+export const { onItemAdded } = CartActions.actions;
 export const BasicActionsReducer = BasicAction.reducer;
 export const NavActionReducer = NavActions.reducer;
+export const CartActionReducer = CartActions.reducer;

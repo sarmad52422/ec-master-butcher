@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import {NavActionReducer,BasicActionsReducer} from "./features/global_actions";
+import {NavActionReducer,BasicActionsReducer,CartActionReducer} from "./features/global_actions";
 export const store = configureStore({
   reducer: {
     NavActionReducer,
-    BasicActionsReducer
+    BasicActionsReducer,
+    CartActionReducer,
+    
   },
 });
 export type RootState = ReturnType<typeof store.getState>;
