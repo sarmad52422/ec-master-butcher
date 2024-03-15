@@ -14,9 +14,8 @@ interface ProductGridProps {
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   const dispatcher = useAppDispatch();
-  // dispatcher(onItemAdded({} as Product));
-  const addProductToCart = (product: Product) => {
-    // dispatcher(CartActionReducer.onItemAdded(product));
+  const addProductToCart = (id: string) => {
+    dispatcher(onItemAdded(id));
   };
   return (
     <div className="mt-6">
@@ -40,8 +39,13 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
 
                 <div className="card-actions justify-between items-center mt-2 sm:w-52 md:w-60">
                   <p className="font-bold"> Price: {product.price}</p>
-
-                  <div className="btn btn-outline rounded-md btn-sm">
+                  <div
+                    className="btn btn-outline rounded-md btn-sm"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      addProductToCart(product.id.toString());
+                    }}
+                  >
                     Add to cart
                   </div>
                 </div>

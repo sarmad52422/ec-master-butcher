@@ -20,11 +20,11 @@ const initialAdminState: AdminActionType = {
   CurrentCompoent:OrderPageName
 };
 interface CartItems {
-  itemId:string;
+  itemIds:string [];
 
 }
 const initiCartState:CartItems = {
-  itemId:""
+  itemIds:[]
 }
 
 export const NavActions = createSlice({
@@ -56,7 +56,7 @@ export const CartActions = createSlice({
   reducers: {
     reset: () => initiCartState,
     onItemAdded: (state, action: PayloadAction<string>) => {
-      state.itemId = action.payload;
+      state.itemIds.push(action.payload);
     }
   },
 });

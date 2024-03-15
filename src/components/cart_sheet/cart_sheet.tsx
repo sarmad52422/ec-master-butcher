@@ -1,10 +1,11 @@
+import { useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 import React, { useState } from "react";
-
+import { dummyProducts } from "@/app/page";
 interface CartItem {
   id: number;
   name: string;
-  image: string;
+  image?: string;
   quantity: number;
   price: number;
 }
@@ -13,6 +14,19 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   isOpen,
   onClose,
 }) => {
+  const cartItemsIds = useAppSelector(
+    (state) => state.CartActionReducer.itemIds
+  );
+  const cartItemsDetails: CartItem[] = [];
+
+  dummyProducts.map((product) => {
+    if (cartItemsIds.includes(product.id.toString())) {
+      const item = { ...product, quantity: 1 };
+
+      cartItemsDetails.push(item);
+      console.log(product);
+    }
+  });
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
       id: 1,
@@ -85,7 +99,7 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
             </svg>
           </div>
           <div className="divide-y mt-4">
-            {cartItems.map((item) => (
+            {cartItemsDetails.map((item) => (
               <div
                 key={item.id}
                 className="flex items-start justify-between gap-4 py-8"
