@@ -57,13 +57,19 @@ export const CartActions = createSlice({
     reset: () => initiCartState,
     onItemAdded: (state, action: PayloadAction<string>) => {
       state.itemIds.push(action.payload);
-    }
+    },
+   onIemUpdate:(state,action:PayloadAction<string>)=>{
+    const index = state.itemIds.indexOf(action.payload);
+    if (index !== -1) {
+        state.itemIds.splice(index, 1);
+    }  
+  }
   },
 });
 
 export const { hideNavbar } = NavActions.actions;
 export const { onOrderValueSearched,onComponentChanged } = BasicAction.actions;
-export const { onItemAdded } = CartActions.actions;
+export const { onItemAdded , onIemUpdate} = CartActions.actions;
 export const BasicActionsReducer = BasicAction.reducer;
 export const NavActionReducer = NavActions.reducer;
 export const CartActionReducer = CartActions.reducer;

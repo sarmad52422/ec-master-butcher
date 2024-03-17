@@ -1,6 +1,79 @@
 import React from "react";
 
 const CheckoutPage: React.FC = () => {
+  const products = [
+    {
+      id: 1,
+      name: "Product 1",
+      image:
+        "https://images.pexels.com/photos/1314041/pexels-photo-1314041.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      price: 29.99,
+      quantity: 1,
+    },
+    {
+      id: 2,
+      name: "Product 2",
+      image: "https://images.pexels.com/photos/65175/pexels-photo-65175.jpeg",
+      quantity: 1,
+
+      price: 39.99,
+    },
+    {
+      id: 3,
+      name: "Product 2",
+      image:
+        "https://images.pexels.com/photos/618775/pexels-photo-618775.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      price: 39.99,
+    },
+    {
+      id: 4,
+      name: "Product 2",
+      image:
+        "https://images.pexels.com/photos/3688/food-dinner-lunch-chicken.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      price: 39.99,
+      quantity: 1,
+    },
+    {
+      id: 5,
+      name: "Product 2",
+      image:
+        "https://images.pexels.com/photos/616354/pexels-photo-616354.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      price: 39.99,
+      quantity: 1,
+    },
+    {
+      id: 6,
+      name: "Tuna Fish",
+      image:
+        "https://images.pexels.com/photos/14062112/pexels-photo-14062112.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      price: 39.99,
+      quantity: 1,
+    },
+    {
+      id: 7,
+      name: "Fish Stakes",
+      image:
+        "https://images.pexels.com/photos/7451973/pexels-photo-7451973.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      price: 41.99,
+      quantity: 1,
+    },
+    {
+      id: 8,
+      name: "Fish Fillets",
+      image:
+        "https://images.pexels.com/photos/14062111/pexels-photo-14062111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      price: 39.99,
+      quantity: 1,
+    },
+    {
+      id: 9,
+      name: "Meat Mince",
+      image:
+        "https://pratapchicken.com/wp-content/uploads/2020/10/49420775-C0CC-43FD-9353-EE6EB96B2581.jpeg",
+      price: 39.99,
+      quantity: 1,
+    },
+  ];
   return (
     <div className="font-sans bg-white mt-64">
       <div className="max-lg:max-w-xl mx-auto w-full">
@@ -183,86 +256,41 @@ const CheckoutPage: React.FC = () => {
                   Order Summary
                 </h2>
                 <div className="space-y-6 mt-10">
-                  <div className="grid sm:grid-cols-2 items-start gap-6">
-                    <div className="max-w-[190px] px-4 py-6 shrink-0 bg-gray-200 rounded-md">
-                      <img
-                        src="https://readymadeui.com/images/product10.webp"
-                        className="w-full object-contain"
-                        alt="product1"
-                      />
+                  {products.map((product) => (
+                    <div
+                      key={product.id}
+                      className="grid sm:grid-cols-2 items-start gap-6"
+                    >
+                      <div className="max-w-[190px] px-4 py-6 shrink-0 bg-gray-200 rounded-md">
+                        <img
+                          src={product.image}
+                          className="w-full object-contain"
+                          alt={product.name}
+                        />
+                      </div>
+                      <div>
+                        <h3 className="text-base text-[#333]">
+                          {product.name}
+                        </h3>
+                        <ul className="text-xs text-[#333] space-y-2 mt-2">
+                          <li className="flex flex-wrap gap-4">
+                            Quantity{" "}
+                            <span className="ml-auto">{product.quantity}</span>
+                          </li>
+                          <li className="flex flex-wrap gap-4">
+                            Total Price <span className="ml-auto">40</span>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-base text-[#333]">
-                        Naruto: Split Sneakers
-                      </h3>
-                      <ul className="text-xs text-[#333] space-y-2 mt-2">
-                        <li className="flex flex-wrap gap-4">
-                          Size <span className="ml-auto">37</span>
-                        </li>
-                        <li className="flex flex-wrap gap-4">
-                          Quantity <span className="ml-auto">2</span>
-                        </li>
-                        <li className="flex flex-wrap gap-4">
-                          Total Price <span className="ml-auto">$40</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="grid sm:grid-cols-2 items-start gap-6">
-                    <div className="max-w-[190px] px-4 py-6 shrink-0 bg-gray-200 rounded-md">
-                      <img
-                        src="https://readymadeui.com/images/product11.webp"
-                        className="w-full object-contain"
-                        alt="product2"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="text-base text-[#333]">
-                        VelvetGlide Boots
-                      </h3>
-                      <ul className="text-xs text-[#333] space-y-2 mt-2">
-                        <li>
-                          Size <span className="float-right">37</span>
-                        </li>
-                        <li>
-                          Quantity <span className="float-right">2</span>
-                        </li>
-                        <li>
-                          Total Price <span className="float-right">$40</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="grid sm:grid-cols-2 items-start gap-6">
-                    <div className="max-w-[190px] px-4 py-6 shrink-0 bg-gray-200 rounded-md">
-                      <img
-                        src="https://readymadeui.com/images/product14.webp"
-                        className="w-full object-contain"
-                        alt="product3"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="text-base text-[#333]">Echo Elegance</h3>
-                      <ul className="text-xs text-[#333] space-y-2 mt-2">
-                        <li>
-                          Size <span className="float-right">37</span>
-                        </li>
-                        <li>
-                          Quantity <span className="float-right">2</span>
-                        </li>
-                        <li>
-                          Total Price <span className="float-right">$40</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
-              <div className="absolute left-0 bottom-0 bg-gray-200 w-full p-4">
-                <h4 className="flex flex-wrap gap-4 text-base text-[#333] font-bold">
-                  Total <span className="ml-auto">$240.00</span>
-                </h4>
-              </div>
+            </div>
+            <div className="absolute left-0 bottom-0 bg-gray-200 w-full p-4">
+              <h4 className="flex flex-wrap gap-4 text-base text-[#333] font-bold">
+                Total <span className="ml-auto">$240.00</span>
+              </h4>
             </div>
           </div>
         </div>

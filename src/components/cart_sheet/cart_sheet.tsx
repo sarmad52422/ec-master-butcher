@@ -1,7 +1,12 @@
-import { useAppSelector } from "@/redux/hooks";
+"use client";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { dummyProducts } from "@/app/page";
+import {
+  CartActionReducer,
+  onItemAdded,
+} from "@/redux/features/global_actions";
 interface CartItem {
   id: number;
   name: string;
@@ -10,6 +15,23 @@ interface CartItem {
   price: number;
 }
 
+function countDuplicates(
+  cartItemsIds: string[]
+): { id: string; count: number }[] {
+  // Create an empty object to store counts
+  const counts: { [id: string]: number } = {};
+
+  // Iterate through the array
+  cartItemsIds.forEach((id) => {
+    // If the id already exists in counts, increment its count; otherwise, set count to 1
+    counts[id] = counts[id] ? counts[id] + 1 : 1;
+  });
+
+  // Convert counts object into an array of objects with the format {id: count}
+  const result = Object.keys(counts).map((id) => ({ id, count: counts[id] }));
+
+  return result;
+}
 const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   isOpen,
   onClose,
@@ -17,39 +39,24 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   const cartItemsIds = useAppSelector(
     (state) => state.CartActionReducer.itemIds
   );
-  const cartItemsDetails: CartItem[] = [];
+  const totalItems = countDuplicates(cartItemsIds);
+  const dispatcher = useAppDispatch();
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  useEffect(() => {
+    const updatedCartItems: CartItem[] = [];
 
-  dummyProducts.map((product) => {
-    if (cartItemsIds.includes(product.id.toString())) {
-      const item = { ...product, quantity: 1 };
+    dummyProducts.forEach((product) => {
+      if (cartItemsIds.includes(product.id.toString())) {
+        updatedCartItems.push({
+          ...product,
+          quantity: totalItems.find((item) => item.id === product.id.toString())
+            ?.count as number,
+        });
+      }
+    });
 
-      cartItemsDetails.push(item);
-      console.log(product);
-    }
-  });
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      name: "Item 1",
-      quantity: 2,
-      price: 10,
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: 2,
-      name: "Item 2",
-      quantity: 1,
-      price: 15,
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: 3,
-      name: "Item 3",
-      quantity: 3,
-      price: 12,
-      image: "https://via.placeholder.com/150",
-    },
-  ]);
+    setCartItems(updatedCartItems);
+  }, [cartItemsIds]);
 
   const handleClose = () => {
     onClose();
@@ -60,11 +67,14 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   };
 
   const handleQuantityChange = (itemId: number, newQuantity: number) => {
+    console.log(newQuantity);
+
     setCartItems(
       cartItems.map((item) =>
         item.id === itemId ? { ...item, quantity: newQuantity } : item
       )
     );
+    // dispatcher(updateItemQuantity({ itemId: itemId.toString(), newQuantity }));
   };
 
   const total = cartItems.reduce(
@@ -99,7 +109,7 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
             </svg>
           </div>
           <div className="divide-y mt-4">
-            {cartItemsDetails.map((item) => (
+            {cartItems.map((item) => (
               <div
                 key={item.id}
                 className="flex items-start justify-between gap-4 py-8"
