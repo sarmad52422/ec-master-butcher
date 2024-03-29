@@ -16,6 +16,7 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
+  currentPath: string;
 }>) {
   return (
     <html lang="en" data-theme={"cupcake"}>

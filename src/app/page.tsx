@@ -5,6 +5,7 @@ import ProductGrid from "@/components/product/product_grid";
 import React from "react";
 import { useAppSelector } from "@/redux/hooks";
 import SearchBar from "@/components/navbar/components/search_bar";
+
 export const dummyProducts: Product[] = [
   {
     id: 1,
