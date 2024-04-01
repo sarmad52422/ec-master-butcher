@@ -7,9 +7,10 @@ import {
   CartActionReducer,
   onItemAdded,
 } from "@/redux/features/global_actions";
+import { ProductInterface } from "@/interfaces/product_iterface";
 
 interface ProductGridProps {
-  products: Product[];
+  products: ProductInterface[];
 }
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {

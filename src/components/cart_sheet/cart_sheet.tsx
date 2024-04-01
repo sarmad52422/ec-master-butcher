@@ -2,11 +2,12 @@
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { dummyProducts } from "@/app/page";
 import {
   CartActionReducer,
   onItemAdded,
 } from "@/redux/features/global_actions";
+import { CLientServices } from "@/services/user";
+import { ProductInterface } from "@/interfaces/product_iterface";
 interface CartItem {
   id: number;
   name: string;
@@ -42,10 +43,19 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   const totalItems = countDuplicates(cartItemsIds);
   const dispatcher = useAppDispatch();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [products, setProducts] = useState<ProductInterface[]>([]);
+
   useEffect(() => {
     const updatedCartItems: CartItem[] = [];
-
-    dummyProducts.forEach((product) => {
+    const fetchProducts = async () => {
+      try {
+        const response = await CLientServices.getAllProducts();
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+    products.forEach((product) => {
       if (cartItemsIds.includes(product.id.toString())) {
         updatedCartItems.push({
           ...product,
