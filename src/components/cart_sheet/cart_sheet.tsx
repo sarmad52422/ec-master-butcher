@@ -8,12 +8,9 @@ import {
 } from "@/redux/features/global_actions";
 import { CLientServices } from "@/services/user";
 import { ProductInterface } from "@/interfaces/product_iterface";
-interface CartItem {
-  id: number;
-  name: string;
-  image?: string;
+import { count } from "console";
+interface CartItem extends Omit<ProductInterface, "units" & "tags"> {
   quantity: number;
-  price: number;
 }
 
 function countDuplicates(
@@ -37,36 +34,35 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   isOpen,
   onClose,
 }) => {
-  const cartItemsIds = useAppSelector(
-    (state) => state.CartActionReducer.itemIds
-  );
-  const totalItems = countDuplicates(cartItemsIds);
+  const cart = useAppSelector((state) => state.CartActionReducer.itemIds);
+  const totalItems = countDuplicates(cart);
   const dispatcher = useAppDispatch();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [products, setProducts] = useState<ProductInterface[]>([]);
 
   useEffect(() => {
-    const updatedCartItems: CartItem[] = [];
-    const fetchProducts = async () => {
+    const cartItemIds = countDuplicates(cart);
+
+    const fetchProducts = async (cart: { id: string; count: number }[]) => {
       try {
-        const response = await CLientServices.getAllProducts();
-        setProducts(response.data);
+        console.log(cart.map((cart) => cart.id));
+        const products = await Promise.all(
+          cart.map(async (cart) => {
+            const p = await CLientServices.getProductById(cart.id);
+            return {
+              ...p.data,
+              quantity: cart.count,
+            };
+          })
+        );
+        console.log(products);
+        // setProducts(p);
+        setCartItems(products);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
-    products.forEach((product) => {
-      if (cartItemsIds.includes(product.id.toString())) {
-        updatedCartItems.push({
-          ...product,
-          quantity: totalItems.find((item) => item.id === product.id.toString())
-            ?.count as number,
-        });
-      }
-    });
-
-    setCartItems(updatedCartItems);
-  }, [cartItemsIds]);
+    fetchProducts(cartItemIds);
+  }, [cart]);
 
   const handleClose = () => {
     onClose();
@@ -128,16 +124,16 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                   <div className="h-40 bg-gray-100 p-4 rounded">
                     {/* Assuming you have the image property in your CartItem interface */}
                     <img
-                      src={item.image}
+                      src={item.images?.[0]}
                       className="w-full h-full object-contain shrink-0"
                       alt={item.name}
                     />
                   </div>
                   <div>
                     <p className="text-md font-bold text-[#333]">{item.name}</p>
-                    <p className="text-gray-400 text-xs mt-1">
-                      {item.quantity} Item(s)
-                    </p>
+                    {/* <p className="text-gray-400 text-xs mt-1">
+                      {item.units} Item(s)
+                    </p> */}
                     <h4 className="text-xl font-bold text-[#333] mt-4">
                       ${item.price}
                     </h4>

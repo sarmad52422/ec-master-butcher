@@ -77,6 +77,7 @@ import { CLientServices } from "@/services/user";
 
 const Home: React.FC = () => {
   const [products, setProducts] = useState<ProductInterface[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const authState = useAppSelector((state) => state.BasicActionsReducer);
   console.log(authState);
   useEffect(() => {
@@ -84,6 +85,7 @@ const Home: React.FC = () => {
       try {
         const response = await CLientServices.getAllProducts();
         setProducts(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -96,7 +98,7 @@ const Home: React.FC = () => {
     <div className="mt-36">
       <HeroSection />
       <Divider content="Tranding Products" />
-      <ProductGrid products={products} />
+      <ProductGrid products={products} isLoading={isLoading} />
     </div>
   );
 };

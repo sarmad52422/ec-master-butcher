@@ -1,5 +1,4 @@
 // import { OrderComponent } from "@/app/admin/components/OrdersComponent/order_component";
-import { Product } from "@/components/product/interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { JsxElement } from "typescript";
 export const OrderPageName:string = "OrderPage";
