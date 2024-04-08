@@ -1,7 +1,37 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import { CLientServices } from "@/services/user";
 
 const SignUpPage: React.FC = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    try {
+      const response = await CLientServices.signup({
+        firstName,
+        lastName,
+        phoneNumber,
+        email,
+        password,
+      });
+      // Redirect to login page or dashboard after successful signup
+    } catch (error) {
+      setError("Failed to sign up. Please try again.");
+    }
+  };
+
   return (
     <div className="mt-48">
       <section className="bg-base-200">
@@ -17,7 +47,7 @@ const SignUpPage: React.FC = () => {
                 and begin setting up your profile.
               </p>
 
-              <form>
+              <form onSubmit={handleSignUp}>
                 <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
                   <div>
                     <label className="block mb-2 text-sm text-gray-600 ">
@@ -26,6 +56,8 @@ const SignUpPage: React.FC = () => {
                     <input
                       type="text"
                       placeholder="Aria"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
                       className="block w-full px-5 py-3 mt-2 text-black placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600   dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
@@ -37,6 +69,8 @@ const SignUpPage: React.FC = () => {
                     <input
                       type="text"
                       placeholder="Stark"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
                       className="block w-full px-5 py-3 mt-2 text-black placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600  dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
@@ -48,6 +82,8 @@ const SignUpPage: React.FC = () => {
                     <input
                       type="text"
                       placeholder="XXX-XX-XXXX-XXX"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
                       className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600  dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
@@ -59,6 +95,8 @@ const SignUpPage: React.FC = () => {
                     <input
                       type="email"
                       placeholder="ariastark@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600  dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
@@ -70,6 +108,8 @@ const SignUpPage: React.FC = () => {
                     <input
                       type="password"
                       placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
@@ -81,6 +121,8 @@ const SignUpPage: React.FC = () => {
                     <input
                       type="password"
                       placeholder="Enter your password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
                       className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
@@ -113,6 +155,7 @@ const SignUpPage: React.FC = () => {
                   </div>
                 </div>
               </form>
+              {error && <p className="text-red-500">{error}</p>}
             </div>
           </div>
         </div>

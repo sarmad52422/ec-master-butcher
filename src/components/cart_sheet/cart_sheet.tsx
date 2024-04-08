@@ -148,7 +148,14 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                             className="w-3.5 fill-current"
                             viewBox="0 0 124 124"
                             onClick={() => {
-                              handleQuantityChange(item.id, item.quantity - 1);
+                              if (item.quantity > 1) {
+                                handleQuantityChange(
+                                  item.id,
+                                  item.quantity - 1
+                                );
+                              } else {
+                                alert("You have to select atleast 1 quantity");
+                              }
                             }}
                           >
                             <path
@@ -164,7 +171,16 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                             className="w-3 fill-current"
                             viewBox="0 0 42 42"
                             onClick={() => {
-                              handleQuantityChange(item.id, item.quantity + 1);
+                              if (item.units > item.quantity) {
+                                handleQuantityChange(
+                                  item.id,
+                                  item.quantity + 1
+                                );
+                              } else {
+                                alert(
+                                  "The quantity you want to enter is out of stock"
+                                );
+                              }
                             }}
                           >
                             <path

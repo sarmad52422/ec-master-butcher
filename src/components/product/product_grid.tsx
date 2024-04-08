@@ -1,10 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { useAppDispatch } from "@/redux/hooks";
-import {
-  CartActionReducer,
-  onItemAdded,
-} from "@/redux/features/global_actions";
+import { onItemAdded } from "@/redux/features/global_actions";
 import { ProductInterface } from "@/interfaces/product_iterface";
 
 interface ProductGridProps {
@@ -12,7 +9,7 @@ interface ProductGridProps {
   isLoading: boolean;
 }
 
-const ProductGrid: React.FC<ProductGridProps> = ({ products, isLoading }) => {
+const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
   const dispatcher = useAppDispatch();
   const addProductToCart = (id: string) => {
     dispatcher(onItemAdded(id));
@@ -46,7 +43,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, isLoading }) => {
                 </div>
               </div>
             ))
-          : products.map((product) => (
+          : products?.map((product) => (
               <Link
                 key={product.id}
                 href={{
@@ -73,7 +70,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, isLoading }) => {
                         : product.description}
                     </p>
                     <div className="card-actions justify-between items-center mt-2 sm:w-52 md:w-60">
-                      <p className="font-bold"> Price: {product.price}</p>
+                      <p className="font-bold"> Price: {product.price} £</p>
                       <div
                         className="btn btn-outline rounded-md btn-sm"
                         onClick={(e) => {
