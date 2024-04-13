@@ -14,4 +14,7 @@ export const CLientServices = {
     async signup(data: any) {
         return await HttpClient.signup(UserEndPoints.SIGNUP, data);
     },
+    async getAllCategories() {
+        return await HttpClient.getAllCategories(UserEndPoints.GET_ALL_CATEGORIES);
+    },
 };

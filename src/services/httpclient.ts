@@ -78,4 +78,22 @@ export class HttpClient {
             return { error: e };
         }
     }
+    static async getAllCategories(url: string) {
+        try {
+            const response = await axios.get(this.baseUrl + url, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (response?.status === 200) {
+                console.log(response.data);
+                return { data: response.data };
+            } else {
+                return { error: response?.data?.error };
+            }
+        } catch (e) {
+            return { error: e };
+        }
+    }
 }
