@@ -17,4 +17,7 @@ export const CLientServices = {
     async getAllCategories() {
         return await HttpClient.getAllCategories(UserEndPoints.GET_ALL_CATEGORIES);
     },
+    async getProductByCategory(name: string) {
+        return await HttpClient.getProductByCategory(UserEndPoints.GET_PRODUCT_BY_CATEGORY(name));
+    },
 };
