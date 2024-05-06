@@ -9,10 +9,13 @@ export const CLientServices = {
         return await HttpClient.getProductById(UserEndPoints.GET_PRODUCT_BY_ID(id));
     },
     async login(data: any) {
-        return await HttpClient.login(UserEndPoints.LOGIN, data);
+        return await HttpClient.login(UserEndPoints.LOG_IN, data);
     },
-    async signup(data: any) {
-        return await HttpClient.signup(UserEndPoints.SIGNUP, data);
+    async signUp(data: any) {
+        return await HttpClient.signup(UserEndPoints.SIGN_UP, data);
+    },
+    async logout() {
+        return await HttpClient.Logout(UserEndPoints.LOG_OUT);
     },
     async getAllCategories() {
         return await HttpClient.getAllCategories(UserEndPoints.GET_ALL_CATEGORIES);

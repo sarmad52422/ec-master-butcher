@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { CLientServices } from "@/services/user";
+import Cookies from "js-cookie";
 
 const SignInPage: React.FC = () => {
   const router = useRouter();
@@ -14,10 +15,12 @@ const SignInPage: React.FC = () => {
     e.preventDefault();
     try {
       const response = await CLientServices.login({ email, password });
+      console.log(response.data);
       if (response.data) {
-        router.push("/dashboard");
+        Cookies.set("jwt", response.data.accessToken);
+        router.push("/");
       } else {
-        setError("Invalid email or password");
+        setError("Invalid user");
       }
     } catch (error) {
       setError("Invalid email or password");

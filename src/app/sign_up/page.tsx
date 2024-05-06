@@ -2,6 +2,9 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { CLientServices } from "@/services/user";
+import { useRouter } from "next/navigation";
+import { SignupValidationSchema } from "@/validation/sign_up_validation";
+import { ValidationError } from "yup";
 
 const SignUpPage: React.FC = () => {
   const [firstName, setFirstName] = useState("");
@@ -11,24 +14,53 @@ const SignUpPage: React.FC = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
     try {
-      const response = await CLientServices.signup({
+      setLoading(true); // Start loading
+      await SignupValidationSchema.validate(
+        {
+          firstName,
+          lastName,
+          phoneNumber,
+          email,
+          password,
+          confirmPassword,
+        },
+        { abortEarly: false }
+      );
+
+      // If validation succeeds, proceed with signup
+      const response = await CLientServices.signUp({
+        email,
+        password,
         firstName,
         lastName,
         phoneNumber,
-        email,
-        password,
       });
+      console.log(JSON.stringify(response) + "<<<<<Respnen");
+      if (response.data) {
+        console.log(response.data);
+        router.push("/sign_in"); // Redirect to login page after successful signup
+      } else {
+        setError("Failed to sign up. Please try again.");
+      }
       // Redirect to login page or dashboard after successful signup
-    } catch (error) {
-      setError("Failed to sign up. Please try again.");
+    } catch (validationError) {
+      if (validationError instanceof ValidationError) {
+        const validationErrors = validationError.inner.map(
+          (error) => error.message
+        );
+        setError(validationErrors.join(" \n"));
+      } else {
+        setError("Failed to sign up. Please try again.");
+      }
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -41,12 +73,10 @@ const SignUpPage: React.FC = () => {
               <h1 className="text-2xl font-semibold tracking-wider text-gray-800 capitalize ">
                 Get your free account now.
               </h1>
-
               <p className="mt-4 text-gray-500 dark:text-gray-400">
                 Let’s get you all set up so you can verify your personal account
                 and begin setting up your profile.
               </p>
-
               <form onSubmit={handleSignUp}>
                 <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
                   <div>
@@ -127,7 +157,10 @@ const SignUpPage: React.FC = () => {
                     />
                   </div>
 
-                  <button className="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-black capitalize transition-colors duration-300 transform bg-primary rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                  <button
+                    className="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-black capitalize transition-colors duration-300 transform bg-primary rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                    disabled={loading}
+                  >
                     <span>Sign Up </span>
 
                     <svg
@@ -155,7 +188,13 @@ const SignUpPage: React.FC = () => {
                   </div>
                 </div>
               </form>
-              {error && <p className="text-red-500">{error}</p>}
+              {error && (
+                <div className="text-red-500">
+                  {error.split("\n").map((errorMessage, index) => (
+                    <p key={index}>{errorMessage}</p>
+                  ))}
+                </div>
+              )}{" "}
             </div>
           </div>
         </div>
