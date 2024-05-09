@@ -42,9 +42,11 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
               </div>
             ))
           : products?.map((product) => (
-              <div className="card md:w-72 sm:w-64 bg-base-100 shadow-xl m-10">
+              <div
+                key={product.id}
+                className="card md:w-72 sm:w-64 bg-base-100 shadow-xl m-10"
+              >
                 <Link
-                  key={product.id}
                   href={{
                     pathname: "/item_details",
                     query: { id: product.id.toString() },
