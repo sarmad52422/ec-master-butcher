@@ -10,7 +10,7 @@ const ProfileIcon = () => {
           <div className="w-6 rounded-full">
             <img
               alt="Tailwind CSS Navbar component"
-              src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+              src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             />
           </div>
         </div>
