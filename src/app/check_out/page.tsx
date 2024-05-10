@@ -4,19 +4,19 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
 const CheckoutPage: React.FC = () => {
-  const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return !!Cookies.get("jwt");
-  });
+  // const router = useRouter();
+  // const [isLoggedIn, setIsLoggedIn] = useState(() => {
+  //   return !!Cookies.get("jwt");
+  // });
 
-  useEffect(() => {
-    const token = Cookies.get("jwt");
-    setIsLoggedIn(!!token);
-  }, []);
-  if (!isLoggedIn) {
-    router.push("/sign_in");
-    return null;
-  }
+  // useEffect(() => {
+  //   const token = Cookies.get("jwt");
+  //   setIsLoggedIn(!!token);
+  // }, []);
+  // if (!isLoggedIn) {
+  //   router.push("/sign_in");
+  //   return null;
+  // }
   const products = [
     {
       id: 1,
