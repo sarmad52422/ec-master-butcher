@@ -49,17 +49,16 @@ const TopNavbar = () => {
             </li>
           </ul>
         </div>
-        <div className="bg-red-300">
-          {/* Conditional rendering based on authentication status */}
-          {isLoggedIn ? (
-            <button onClick={handleLogout}>Logout</button>
-          ) : (
-            <>
-              <Link href="/sign_in">Sign In</Link>
-              <Link href="/sign_up">Sign Up</Link>
-            </>
-          )}
-        </div>
+        {/* <div className="bg-red-300">
+            {isLoggedIn ? (
+              <button onClick={handleLogout}>Logout</button>
+            ) : (
+              <>
+                <Link href="/sign_in">Sign In</Link>
+                <Link href="/sign_up">Sign Up</Link>
+              </>
+            )}
+          </div> */}
         <div>
           <ProfileIcon />
         </div>
