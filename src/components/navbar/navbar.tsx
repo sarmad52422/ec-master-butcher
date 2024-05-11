@@ -53,7 +53,7 @@ const Navbar: React.FC = () => {
               className="btn btn-ghost text-xl lg:text-2xl ml-2 lg:ml-0"
               href="/"
             >
-              Meat Fresh House
+              Burnage Butcher
             </a>
           </div>
           <div className="hidden lg:flex">
