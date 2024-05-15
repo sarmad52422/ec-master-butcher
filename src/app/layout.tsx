@@ -9,7 +9,7 @@ import { Suspense } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Fresh Meat House",
+  title: "Burnage Butcher",
   description: "The best place to buy fresh meat online",
 };
 

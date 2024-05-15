@@ -2,7 +2,9 @@ import axios from "axios";
 import Cookies from 'js-cookie'; // Import Cookies library
 
 export class HttpClient {
-    static baseUrl: string = "http://localhost:3000";
+    // static baseUrl: string = "http://localhost:3000";
+    static baseUrl: string = "https://e-com-backend-1zsb.onrender.com";
+
 
     static async getAllProducts(url: string) {
         try {
