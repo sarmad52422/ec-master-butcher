@@ -6,6 +6,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import { ProductInterface } from "@/interfaces/product_iterface";
 import { CLientServices } from "@/services/user";
+import axios from "axios";
 
 const Home = () => {
   const [products, setProducts] = useState<ProductInterface[]>([]);
@@ -16,6 +17,8 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        //remove this line after building the server
+        await axios.get("https://e-com-backend-1zsb.onrender.com");
         const productData = await CLientServices.getAllProducts();
         setProducts(productData.data);
       } catch (error) {
