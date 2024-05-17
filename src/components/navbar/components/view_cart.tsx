@@ -7,7 +7,6 @@ import { useState } from "react";
 const ViewCart: React.FC = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const cartState = useAppSelector((state) => state.CartActionReducer.itemIds);
-  console.log(cartState);
   const toggleSheet = () => {
     setIsSheetOpen(!isSheetOpen);
     document.body.style.overflow = isSheetOpen ? "auto" : "hidden";

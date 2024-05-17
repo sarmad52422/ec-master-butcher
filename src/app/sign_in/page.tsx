@@ -2,14 +2,19 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "@/redux/features/auth_slice";
 import { CLientServices } from "@/services/user";
 import Cookies from "js-cookie";
 
 const SignInPage: React.FC = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  console.log(" Now this is sign in page >>>>>>>>>>>>>>>>>>>>>>>");
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,7 +22,13 @@ const SignInPage: React.FC = () => {
       const response = await CLientServices.login({ email, password });
       console.log(response.data);
       if (response.data) {
-        Cookies.set("jwt", response.data.accessToken);
+        Cookies.set("jwt", response.data.accessToken, {
+          expires: 7,
+          secure: true,
+          SameSite: "Strict",
+        });
+
+        dispatch(login());
         router.push("/");
       } else {
         setError("Invalid user");

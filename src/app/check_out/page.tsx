@@ -1,22 +1,24 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import React, { useEffect } from "react";
+import { checkAuth } from "@/redux/features/auth_slice";
+import { useDispatch, useSelector } from "react-redux";
 
 const CheckoutPage: React.FC = () => {
-  // const router = useRouter();
-  // const [isLoggedIn, setIsLoggedIn] = useState(() => {
-  //   return !!Cookies.get("jwt");
-  // });
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
 
-  // useEffect(() => {
-  //   const token = Cookies.get("jwt");
-  //   setIsLoggedIn(!!token);
-  // }, []);
-  // if (!isLoggedIn) {
-  //   router.push("/sign_in");
-  //   return null;
-  // }
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push("/sign_in");
+    }
+  }, [isLoggedIn, router]);
+
   const products = [
     {
       id: 1,

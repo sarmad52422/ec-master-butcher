@@ -1,32 +1,24 @@
-import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import ProfileIcon from "./profile_icon";
 import { CLientServices } from "@/services/user";
 import Cookies from "js-cookie";
+import { logout } from "@/redux/features/auth_slice";
 
 const TopNavbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track user's authentication status
-
-  useEffect(() => {
-    // Check if the token exists in the cookie
-    const token = Cookies.get("jwt");
-    setIsLoggedIn(!!token); // Update isLoggedIn based on the existence of token
-  }, []); // Run this effect only once on component mount
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
 
   const handleLogout = async () => {
-    // Call logout service
     try {
       const result = await CLientServices.logout();
       if (result) {
         console.log("Logout successful: ", result);
-        // Remove the token from the cookie
         Cookies.remove("jwt");
-        // Update authentication status
-        setIsLoggedIn(false); // Manually update isLoggedIn state
+        dispatch(logout());
       }
     } catch (error) {
       console.error("Error during logout: ", error);
-      // Handle logout error
     }
   };
 
@@ -49,19 +41,13 @@ const TopNavbar = () => {
             </li>
           </ul>
         </div>
-        {/* <div className="bg-red-300">
-            {isLoggedIn ? (
-              <button onClick={handleLogout}>Logout</button>
-            ) : (
-              <>
-                <Link href="/sign_in">Sign In</Link>
-                <Link href="/sign_up">Sign Up</Link>
-              </>
-            )}
-          </div> */}
-        <div>
-          <ProfileIcon />
-        </div>
+        {isLoggedIn ? (
+          <div>
+            <ProfileIcon logoutHandler={handleLogout} />
+          </div>
+        ) : (
+          <Link href="/sign_in">Sign In</Link>
+        )}
       </div>
     </div>
   );

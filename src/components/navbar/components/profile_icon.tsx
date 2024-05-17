@@ -1,4 +1,4 @@
-const ProfileIcon = () => {
+const ProfileIcon = ({ logoutHandler }: any) => {
   return (
     <div>
       <div className="dropdown dropdown-end ">
@@ -28,7 +28,7 @@ const ProfileIcon = () => {
             <a>Settings</a>
           </li>
           <li>
-            <a>Logout</a>
+            <a onClick={logoutHandler}>Logout</a>
           </li>
         </ul>
         <div className="lg:hidden dropdown">
