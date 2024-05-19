@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import ProfileIcon from "./profile_icon";
 import { CLientServices } from "@/services/user";
-import Cookies from "js-cookie";
 import { logout } from "@/redux/features/auth_slice";
 
 const TopNavbar = () => {
@@ -13,14 +12,15 @@ const TopNavbar = () => {
     try {
       const result = await CLientServices.logout();
       if (result) {
-        console.log("Logout successful: ", result);
-        Cookies.remove("jwt");
         dispatch(logout());
       }
     } catch (error) {
       console.error("Error during logout: ", error);
     }
   };
+  console.log(
+    isLoggedIn + "<<< now this is console of login to check on refresh",
+  );
 
   return (
     <div>
@@ -28,16 +28,13 @@ const TopNavbar = () => {
         <div className="lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a>Home</a>
+              <Link href="/">Home</Link>
             </li>
             <li>
-              <a>About Us</a>
+              <Link href="/about">About Us</Link>
             </li>
             <li>
-              <a>Contact Us</a>
-            </li>
-            <li>
-              <a>Contact Us</a>
+              <Link href="/contact">Contact Us</Link>
             </li>
           </ul>
         </div>

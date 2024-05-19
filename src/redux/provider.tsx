@@ -1,7 +1,27 @@
 "use client";
+import { Provider, useDispatch } from "react-redux";
 import { store } from "./store";
-import { Provider } from "react-redux";
+import { useEffect } from "react";
+import { checkAuth } from "./features/auth_slice";
 
-export function Providers({ children }: { children: React.ReactNode }) {
-  return <Provider store={store}>{children}</Provider>;
-}
+const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+
+  return <>{children}</>;
+};
+
+export const Providers: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  return (
+    <Provider store={store}>
+      <AuthProvider>{children}</AuthProvider>
+    </Provider>
+  );
+};

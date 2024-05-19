@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -14,18 +15,15 @@ const SignInPage: React.FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  console.log(" Now this is sign in page >>>>>>>>>>>>>>>>>>>>>>>");
-
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const response = await CLientServices.login({ email, password });
-      console.log(response.data);
       if (response.data) {
         Cookies.set("jwt", response.data.accessToken, {
           expires: 7,
           secure: true,
-          SameSite: "Strict",
+          sameSite: "Strict",
         });
 
         dispatch(login());
@@ -43,7 +41,7 @@ const SignInPage: React.FC = () => {
       <section className="bg-base-200">
         <div className="container flex items-center justify-center min-h-screen px-6 mx-auto">
           <form className="w-full max-w-md" onSubmit={handleLogin}>
-            <h1 className="mt-3 text-2xl font-semibold text-gray-800 capitalize sm:text-3xl ">
+            <h1 className="mt-3 text-2xl font-semibold text-gray-800 capitalize sm:text-3xl">
               Sign In
             </h1>
 
@@ -67,7 +65,7 @@ const SignInPage: React.FC = () => {
 
               <input
                 type="email"
-                className="block w-full py-3 text-black bg-white border rounded-lg px-11   dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                className="block w-full py-3 text-black bg-white border rounded-lg px-11 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -94,7 +92,7 @@ const SignInPage: React.FC = () => {
 
               <input
                 type="password"
-                className="block w-full px-10 py-3 text-black bg-white border rounded-lg   dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                className="block w-full px-10 py-3 text-black bg-white border rounded-lg dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

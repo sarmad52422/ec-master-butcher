@@ -7,6 +7,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { ProductInterface } from "@/interfaces/product_iterface";
 import { CLientServices } from "@/services/user";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const Home = () => {
   const [products, setProducts] = useState<ProductInterface[]>([]);
