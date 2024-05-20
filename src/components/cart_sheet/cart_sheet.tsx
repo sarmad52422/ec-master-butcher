@@ -3,33 +3,27 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import {
-  CartActionReducer,
+  initializeCart,
   onItemAdded,
+  onIemUpdate,
 } from "@/redux/features/global_actions";
 import { CLientServices } from "@/services/user";
 import { ProductInterface } from "@/interfaces/product_iterface";
-import { count } from "console";
+
 interface CartItem extends Omit<ProductInterface, "units" & "tags"> {
   quantity: number;
 }
 
 function countDuplicates(
-  cartItemsIds: string[]
+  cartItemsIds: string[],
 ): { id: string; count: number }[] {
-  // Create an empty object to store counts
   const counts: { [id: string]: number } = {};
-
-  // Iterate through the array
   cartItemsIds.forEach((id) => {
-    // If the id already exists in counts, increment its count; otherwise, set count to 1
     counts[id] = counts[id] ? counts[id] + 1 : 1;
   });
-
-  // Convert counts object into an array of objects with the format {id: count}
-  const result = Object.keys(counts).map((id) => ({ id, count: counts[id] }));
-
-  return result;
+  return Object.keys(counts).map((id) => ({ id, count: counts[id] }));
 }
+
 const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   isOpen,
   onClose,
@@ -38,6 +32,17 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   const totalItems = countDuplicates(cart);
   const dispatcher = useAppDispatch();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  useEffect(() => {
+    const storedCartItems = localStorage.getItem("cartItems");
+    if (storedCartItems) {
+      dispatcher(initializeCart(JSON.parse(storedCartItems)));
+    }
+  }, [dispatcher]);
+
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cart));
+  }, [cart]);
 
   useEffect(() => {
     const cartItemIds = countDuplicates(cart);
@@ -52,16 +57,20 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
               ...p.data,
               quantity: cart.count,
             };
-          })
+          }),
         );
         console.log(products);
-        // setProducts(p);
         setCartItems(products);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
-    fetchProducts(cartItemIds);
+
+    if (cartItemIds.length > 0) {
+      fetchProducts(cartItemIds);
+    } else {
+      setCartItems([]);
+    }
   }, [cart]);
 
   const handleClose = () => {
@@ -69,23 +78,25 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   };
 
   const handleDeleteItem = (itemId: number) => {
-    setCartItems(cartItems.filter((item) => item.id !== itemId));
+    dispatcher(onIemUpdate(itemId.toString()));
   };
 
   const handleQuantityChange = (itemId: number, newQuantity: number) => {
     console.log(newQuantity);
-
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === itemId ? { ...item, quantity: newQuantity } : item
-      )
+    const updatedCartItems = cartItems.map((item) =>
+      item.id === itemId ? { ...item, quantity: newQuantity } : item,
     );
-    // dispatcher(updateItemQuantity({ itemId: itemId.toString(), newQuantity }));
+    setCartItems(updatedCartItems);
+    dispatcher(onItemAdded(itemId.toString()));
+  };
+
+  const handleCheckout = () => {
+    localStorage.removeItem("cartItems");
   };
 
   const total = cartItems.reduce(
     (acc, item) => acc + item.quantity * item.price,
-    0
+    0,
   );
 
   return (
@@ -120,9 +131,8 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                 key={item.id}
                 className="flex items-start justify-between gap-4 py-8"
               >
-                <div className="flex max-sm:flex-col gap-6">
+                <div className="flex  *:max-sm:flex-col gap-6">
                   <div className="h-40 bg-gray-100 p-4 rounded">
-                    {/* Assuming you have the image property in your CartItem interface */}
                     <img
                       src={item.images?.[0]}
                       className="w-full h-full object-contain shrink-0"
@@ -131,9 +141,6 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                   </div>
                   <div>
                     <p className="text-md font-bold text-[#333]">{item.name}</p>
-                    {/* <p className="text-gray-400 text-xs mt-1">
-                      {item.units} Item(s)
-                    </p> */}
                     <h4 className="text-xl font-bold text-[#333] mt-4">
                       ${item.price}
                     </h4>
@@ -151,10 +158,10 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                               if (item.quantity > 1) {
                                 handleQuantityChange(
                                   item.id,
-                                  item.quantity - 1
+                                  item.quantity - 1,
                                 );
                               } else {
-                                alert("You have to select atleast 1 quantity");
+                                alert("You have to select at least 1 quantity");
                               }
                             }}
                           >
@@ -174,11 +181,11 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                               if (item.units > item.quantity) {
                                 handleQuantityChange(
                                   item.id,
-                                  item.quantity + 1
+                                  item.quantity + 1,
                                 );
                               } else {
                                 alert(
-                                  "The quantity you want to enter is out of stock"
+                                  "The quantity you want to enter is out of stock",
                                 );
                               }
                             }}
@@ -218,14 +225,13 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
               Subtotal <span className="ml-auto">${total}</span>
             </li>
           </ul>
-          <Link href="/check_out">
-            <button
-              type="button"
-              className="mt-6 text-md px-6 py-2.5 w-full bg-blue-600 hover:bg-blue-700 text-white rounded"
-            >
-              Check out
-            </button>
-          </Link>
+          <button
+            type="button"
+            className="mt-6 text-md px-6 py-2.5 w-full bg-blue-600 hover:bg-blue-700 text-white rounded"
+            onClick={handleCheckout}
+          >
+            Check out
+          </button>
         </div>
       </div>
     </div>

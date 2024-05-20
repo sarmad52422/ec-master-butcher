@@ -18,31 +18,26 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        //remove this line after building the server
         await axios.get("https://e-com-backend-1zsb.onrender.com");
         const productData = await CLientServices.getAllProducts();
         setProducts(productData.data);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
-        setLoading(false); // Update loading state regardless of success or failure
+        setLoading(false);
       }
     };
 
     if (loading) {
       fetchData();
     }
-  }, [loading]); // Add loading as a dependency
+  }, [loading]);
 
   return (
     <div className="mt-36">
       <HeroSection />
       <Divider content="Tranding Products" />
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <ProductGrid products={products} isLoading={loading} />
-      )}
+      {loading ? null : <ProductGrid products={products} isLoading={loading} />}
     </div>
   );
 };

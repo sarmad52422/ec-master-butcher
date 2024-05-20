@@ -1,8 +1,7 @@
-// import { OrderComponent } from "@/app/admin/components/OrdersComponent/order_component";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { JsxElement } from "typescript";
-export const OrderPageName:string = "OrderPage";
-export const InventoryPageName:string = "InventoryPage";
+
+export const OrderPageName: string = "OrderPage";
+export const InventoryPageName: string = "InventoryPage";
 
 type GloablActions = {
   isNavbarHidden: boolean;
@@ -12,19 +11,18 @@ const initialState: GloablActions = {
 };
 type AdminActionType = {
   orderSearchValue: string;
-  CurrentCompoent:string
+  CurrentCompoent: string;
 };
 const initialAdminState: AdminActionType = {
   orderSearchValue: "",
-  CurrentCompoent:OrderPageName
+  CurrentCompoent: OrderPageName,
 };
 interface CartItems {
-  itemIds:string [];
-
+  itemIds: string[];
 }
-const initiCartState:CartItems = {
-  itemIds:[]
-}
+const initiCartState: CartItems = {
+  itemIds: [],
+};
 
 export const NavActions = createSlice({
   name: "nav_actions",
@@ -44,31 +42,39 @@ export const BasicAction = createSlice({
     onOrderValueSearched: (state, action: PayloadAction<string>) => {
       state.orderSearchValue = action.payload;
     },
-    onComponentChanged: (state,action:PayloadAction<string>)=>{
-        state.CurrentCompoent = action.payload;
-    }
+    onComponentChanged: (state, action: PayloadAction<string>) => {
+      state.CurrentCompoent = action.payload;
+    },
   },
 });
 export const CartActions = createSlice({
   name: "cart_actions",
-  initialState: initiCartState,
+  initialState: {
+    itemIds: JSON.parse(localStorage.getItem("cartItems")) || [],
+  },
   reducers: {
     reset: () => initiCartState,
     onItemAdded: (state, action: PayloadAction<string>) => {
       state.itemIds.push(action.payload);
+      localStorage.setItem("cartItems", JSON.stringify(state.itemIds));
     },
-   onIemUpdate:(state,action:PayloadAction<string>)=>{
-    const index = state.itemIds.indexOf(action.payload);
-    if (index !== -1) {
+    onIemUpdate: (state, action: PayloadAction<string>) => {
+      const index = state.itemIds.indexOf(action.payload);
+      if (index !== -1) {
         state.itemIds.splice(index, 1);
-    }  
-  }
+        localStorage.setItem("cartItems", JSON.stringify(state.itemIds));
+      }
+    },
+    initializeCart: (state, action: PayloadAction<string[]>) => {
+      state.itemIds = action.payload;
+      localStorage.setItem("cartItems", JSON.stringify(action.payload));
+    },
   },
 });
 
 export const { hideNavbar } = NavActions.actions;
-export const { onOrderValueSearched,onComponentChanged } = BasicAction.actions;
-export const { onItemAdded , onIemUpdate} = CartActions.actions;
+export const { onOrderValueSearched, onComponentChanged } = BasicAction.actions;
+export const { onItemAdded, onIemUpdate, initializeCart } = CartActions.actions;
 export const BasicActionsReducer = BasicAction.reducer;
 export const NavActionReducer = NavActions.reducer;
 export const CartActionReducer = CartActions.reducer;

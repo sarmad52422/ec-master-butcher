@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 const Navbar: React.FC = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [scrollingDown, setScrollingDown] = useState(true); // Initially set to true
+  const [scrollingDown, setScrollingDown] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,17 +25,17 @@ const Navbar: React.FC = () => {
     };
   }, [prevScrollPos]);
 
-  const navbarHeight = 100; // Adjust this value based on the height of your navbar
+  const navbarHeight = 100;
 
   const navbarStyle: React.CSSProperties = {
-    top: scrollingDown ? `-${navbarHeight}px` : "0", // Stick the last navbar when scrolling down
+    top: scrollingDown ? `-${navbarHeight}px` : "0",
     position: "fixed",
     zIndex: 10,
     transition: "top 0.3s ease-in-out",
   };
 
   const contentStyle: React.CSSProperties = {
-    paddingTop: scrollingDown ? `${navbarHeight}px` : "0", // Add padding to the top of content when scrolling up
+    paddingTop: scrollingDown ? `${navbarHeight}px` : "0",
   };
 
   return (

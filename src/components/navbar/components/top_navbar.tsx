@@ -18,9 +18,6 @@ const TopNavbar = () => {
       console.error("Error during logout: ", error);
     }
   };
-  console.log(
-    isLoggedIn + "<<< now this is console of login to check on refresh",
-  );
 
   return (
     <div>
