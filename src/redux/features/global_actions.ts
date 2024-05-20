@@ -50,7 +50,7 @@ export const BasicAction = createSlice({
 export const CartActions = createSlice({
   name: "cart_actions",
   initialState: {
-    itemIds: JSON.parse(localStorage.getItem("cartItems")) || [],
+    itemIds: JSON.parse(localStorage.getItem("cartItems") || "[]"),
   },
   reducers: {
     reset: () => initiCartState,
