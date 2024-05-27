@@ -23,13 +23,12 @@ const Footer = () => {
         </nav>
         <nav>
           <h6 className="footer-title">Fresh Meat House</h6>
-          <a>324 Coventry Road</a>
-          <a>Small Heath</a>
-          <a>Birmingham</a>
-          <a>B10 0X00</a>
+          <a>203 BURNAGE LANE</a>
+          <a>MANCHESTER</a>
+          <a>M19 1FE</a>
           <a>United Kingdom</a>
-          <a>+44 121 773 0000</a>
-          <a>@indicator</a>
+          <a>0161 465 5963</a>
+          <a>bbutchersltd@gmail.com</a>
         </nav>
         <form>
           <h6 className="footer-title">Newsletter</h6>
