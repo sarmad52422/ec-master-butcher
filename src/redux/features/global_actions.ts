@@ -56,7 +56,7 @@ export const CartActions = createSlice({
       state.itemIds.push(action.payload);
       localStorage.setItem("cartItems", JSON.stringify(state.itemIds));
     },
-    onIemUpdate: (state, action: PayloadAction<string>) => {
+    onItemUpdate: (state, action: PayloadAction<any>) => {
       const index = state.itemIds.indexOf(action.payload);
       if (index !== -1) {
         state.itemIds.splice(index, 1);
@@ -72,7 +72,7 @@ export const CartActions = createSlice({
 
 export const { hideNavbar } = NavActions.actions;
 export const { onOrderValueSearched, onComponentChanged } = BasicAction.actions;
-export const { onItemAdded, onIemUpdate, initializeCart } = CartActions.actions;
+export const { onItemAdded, onItemUpdate, initializeCart } = CartActions.actions;
 export const BasicActionsReducer = BasicAction.reducer;
 export const NavActionReducer = NavActions.reducer;
 export const CartActionReducer = CartActions.reducer;

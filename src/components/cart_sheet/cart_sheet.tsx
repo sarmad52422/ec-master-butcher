@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import {
   initializeCart,
   onItemAdded,
-  onIemUpdate,
+  onItemUpdate,
 } from "@/redux/features/global_actions";
 import { CLientServices } from "@/services/user";
 import { ProductInterface } from "@/interfaces/product_iterface";
@@ -15,7 +15,7 @@ interface CartItem extends Omit<ProductInterface, "units" & "tags"> {
 }
 
 function countDuplicates(
-  cartItemsIds: string[],
+  cartItemsIds: string[]
 ): { id: string; count: number }[] {
   const counts: { [id: string]: number } = {};
   cartItemsIds.forEach((id) => {
@@ -57,7 +57,7 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
               ...p.data,
               quantity: cart.count,
             };
-          }),
+          })
         );
         console.log(products);
         setCartItems(products);
@@ -77,17 +77,16 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
     onClose();
   };
 
-  const handleDeleteItem = (itemId: number) => {
-    dispatcher(onIemUpdate(itemId.toString()));
+  const handleFullDelete = (itemId: number) => {
+    dispatcher(onItemUpdate(itemId.toString()));
   };
-
   const handleQuantityChange = (itemId: number, newQuantity: number) => {
     console.log(newQuantity);
     const updatedCartItems = cartItems.map((item) =>
-      item.id === itemId ? { ...item, quantity: newQuantity } : item,
+      item.id === itemId ? { ...item, quantity: newQuantity } : item
     );
     setCartItems(updatedCartItems);
-    dispatcher(onItemAdded(itemId.toString()));
+    dispatcher(onItemUpdate({ id: itemId.toString(), quantity: newQuantity }));
   };
 
   const handleCheckout = () => {
@@ -96,7 +95,7 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
 
   const total = cartItems.reduce(
     (acc, item) => acc + item.quantity * item.price,
-    0,
+    0
   );
 
   return (
@@ -131,7 +130,7 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                 key={item.id}
                 className="flex items-start justify-between gap-4 py-8"
               >
-                <div className="flex  *:max-sm:flex-col gap-6">
+                <div className="flex *:max-sm:flex-col gap-6">
                   <div className="h-40 bg-gray-100 p-4 rounded">
                     <img
                       src={item.images?.[0]}
@@ -158,10 +157,12 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                               if (item.quantity > 1) {
                                 handleQuantityChange(
                                   item.id,
-                                  item.quantity - 1,
+                                  item.quantity - 1
                                 );
                               } else {
-                                alert("You have to select at least 1 quantity");
+                                alert(
+                                  "The quantity you want to enter is out of stock"
+                                );
                               }
                             }}
                           >
@@ -181,11 +182,11 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                               if (item.units > item.quantity) {
                                 handleQuantityChange(
                                   item.id,
-                                  item.quantity + 1,
+                                  item.quantity + 1
                                 );
                               } else {
                                 alert(
-                                  "The quantity you want to enter is out of stock",
+                                  "The quantity you want to delete delete with delete button"
                                 );
                               }
                             }}
@@ -204,10 +205,10 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-5 fill-red-500 inline cursor-pointer"
                   viewBox="0 0 24 24"
-                  onClick={() => handleDeleteItem(item.id)}
+                  onClick={() => handleFullDelete(item.id)}
                 >
                   <path
-                    d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
+                    d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v1H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
                     data-original="#000000"
                   ></path>
                   <path
