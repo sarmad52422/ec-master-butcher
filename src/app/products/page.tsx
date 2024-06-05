@@ -1,6 +1,5 @@
 "use client";
 import Divider from "@/components/divider/divider";
-import HeroSection from "@/components/hero_section/hero_section";
 import ProductGrid from "@/components/product/product_grid";
 import { ProductInterface } from "@/interfaces/product_iterface";
 import { CLientServices } from "@/services/user";

@@ -1,26 +1,45 @@
-/* styles/HeroSection.module.css */
+/* styles/hero_section.module.css */
 
 .hero {
-    background: url('/images/home1.jpg') center/cover no-repeat;
-    height: 400px; /* Adjust the height based on your design */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff; /* Set text color to contrast with the background */
-  }
-  
-  .heroContent {
-    text-align: center;
-  }
-  
-  .hero h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-  }
-  
-  .hero p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-  }
-  
- 
+  position: relative;
+  height: 600px; /* Adjust the height based on your design */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff; /* Set text color to contrast with the background */
+}
+
+.carouselContainer {
+  width: 80%; /* Adjust the width as needed */
+  max-width: 600px; /* Maximum width for the carousel */
+  margin: 0 auto;
+}
+
+.carousel .slide {
+  background: none;
+}
+
+.carousel .control-arrow,
+.carousel .control-dots .dot {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.heroContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1; /* Ensure the content is above the carousel */
+  color: #fff; /* Ensure the text color is white for visibility */
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
