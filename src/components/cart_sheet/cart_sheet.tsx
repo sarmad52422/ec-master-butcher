@@ -161,7 +161,7 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                                 );
                               } else {
                                 alert(
-                                  "The quantity you want to enter is out of stock"
+                                  "You have to select at least one quantity of this item."
                                 );
                               }
                             }}
@@ -186,7 +186,7 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                                 );
                               } else {
                                 alert(
-                                  "The quantity you want to delete delete with delete button"
+                                  "The quantity you want to enter is out of stock"
                                 );
                               }
                             }}

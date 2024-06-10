@@ -44,7 +44,7 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
           : products?.map((product) => (
               <div
                 key={product.id}
-                className="card md:w-72 sm:w-64 bg-base-100 shadow-xl m-10"
+                className="card md:w-80 sm:w-64 bg-base-100 shadow-xl m-10"
               >
                 <Link
                   href={{
@@ -56,7 +56,7 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
                     <img
                       src={product.images?.[0]}
                       alt="Meat"
-                      className="md:h-56 md:w-72 sm:h-40 sm:w-64"
+                      className="md:h-56 md:w-80 sm:h-40 sm:w-64 rounded-lg"
                     />
                   </figure>
                   <div className="card-body">

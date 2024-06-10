@@ -1,15 +1,16 @@
 "use client";
+import React, { useState } from "react";
 import { Carousel } from "react-responsive-carousel";
-import styles from "./hero_section.module.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import the carousel CSS
-// import { useAppSelector } from "@/store/stateHooks";
-//  Import your styles
-const HeroSection = () => {
-  const images = [
-    "/images/home1.jpg",
-    "/images/home2.jpg",
-    "/images/home3.jpg",
-    "/images/home4.jpg",
+import styles from "./hero_section.module.css"; // Import your custom styles
+
+const HeroSection: React.FC = () => {
+  const images: string[] = [
+    "/images/home1.png",
+    "/images/home2.png",
+    "/images/home3.png",
+    "/images/home4.png",
+    "/images/home5.png",
   ];
 
   return (
@@ -22,15 +23,11 @@ const HeroSection = () => {
         showStatus={false}
       >
         {images.map((src, index) => (
-          <div className="max-h-screen" key={index}>
-            <img src={src} alt={`Slide ${index + 1}`} />
+          <div className="max-h-min" key={index}>
+            <img src={src} alt={`Slide ${index + 1}`} className="rounded-lg" />
           </div>
         ))}
       </Carousel>
-      <div className={styles.heroContent}>
-        <h1>Welcome to Our Store</h1>
-        <p>Discover amazing products and deals</p>
-      </div>
     </div>
   );
 };
