@@ -3,7 +3,7 @@
 
 .hero {
   position: relative;
-  height: 600px; /* Adjust the height based on your design */
+  height: 500px; /* Adjust the height based on your design */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,7 +12,7 @@
 
 .carouselContainer {
   width: 80%; /* Adjust the width as needed */
-  max-width: 600px; /* Maximum width for the carousel */
+  max-width: 500px; /* Maximum width for the carousel */
   margin: 0 auto;
 }
 

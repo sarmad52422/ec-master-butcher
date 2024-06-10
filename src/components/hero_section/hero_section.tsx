@@ -14,7 +14,7 @@ const HeroSection: React.FC = () => {
   ];
 
   return (
-    <div className={styles.hero}>
+    <div>
       <Carousel
         showArrows={true}
         autoPlay={true}
@@ -23,7 +23,7 @@ const HeroSection: React.FC = () => {
         showStatus={false}
       >
         {images.map((src, index) => (
-          <div className="max-h-min" key={index}>
+          <div key={index}>
             <img src={src} alt={`Slide ${index + 1}`} className="rounded-lg" />
           </div>
         ))}
