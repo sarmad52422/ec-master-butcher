@@ -6,9 +6,6 @@ import React, { Suspense, useEffect, useState } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import { ProductInterface } from "@/interfaces/product_iterface";
 import { CLientServices } from "@/services/user";
-import axios from "axios";
-import Cookies from "js-cookie";
-import { BASE_URL, LOCAL_URL } from "@/constants/constants";
 
 const Home = () => {
   const [products, setProducts] = useState<ProductInterface[]>([]);
@@ -19,7 +16,6 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await axios.get(LOCAL_URL);
         const productData = await CLientServices.getAllProducts();
         setProducts(productData.data);
       } catch (error) {
