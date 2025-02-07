@@ -160,16 +160,19 @@ const CheckoutPage: React.FC = () => {
                         src="https://readymadeui.com/images/visa.webp"
                         className="w-12"
                         alt="card1"
+                        fill
                       />
                       <Image
                         src="https://readymadeui.com/images/american-express.webp"
                         className="w-12"
                         alt="card2"
+                        fill
                       />
                       <Image
                         src="https://readymadeui.com/images/master.webp"
                         className="w-12"
                         alt="card3"
+                        fill
                       />
                     </label>
                   </div>

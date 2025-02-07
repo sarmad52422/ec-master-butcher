@@ -8,7 +8,7 @@ import { ProductInterface } from "@/interfaces/product_iterface";
 import { CLientServices } from "@/services/user";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { LOCAL_URL } from "@/constants/constants";
+import { BASE_URL, LOCAL_URL } from "@/constants/constants";
 
 const Home = () => {
   const [products, setProducts] = useState<ProductInterface[]>([]);

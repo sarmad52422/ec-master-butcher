@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 interface Category {
   id: string;
-  name: string;
+  categoryName: string;
 }
 
 const SearchBar = () => {
@@ -42,7 +42,7 @@ const SearchBar = () => {
                 value={category.id}
                 className="text-body dark:text-bodydark"
               >
-                {category.name.toUpperCase()}
+                {category?.categoryName?.toUpperCase()}
               </option>
             ))}
           </select>

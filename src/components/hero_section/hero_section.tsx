@@ -25,7 +25,7 @@ const HeroSection: React.FC = () => {
       >
         {images.map((src, index) => (
           <div key={index}>
-            <Image src={src} alt={`Slide ${index + 1}`} className="rounded-lg" />
+            <Image src={src} width={1000} height={500} alt={`Slide ${index + 1}`} className="rounded-lg" />
           </div>
         ))}
       </Carousel>
