@@ -1,10 +1,12 @@
+import Image from "next/image";
+
 const ProfileDetails = () => {
   return (
     <div>
       <div className="flex justify-center">
         <div className="avatar">
           <div className="w-20 rounded-xl">
-            <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            <Image alt="stock-photo" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
           </div>
           <div>
             <div className=" ml-5 font-bold">John Doe</div>

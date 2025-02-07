@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { checkAuth } from "@/redux/features/auth_slice";
 import { useDispatch, useSelector } from "react-redux";
-
+import Image from "next/image";
 const CheckoutPage: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -156,17 +156,17 @@ const CheckoutPage: React.FC = () => {
                       htmlFor="card"
                       className="ml-4 flex gap-2 cursor-pointer"
                     >
-                      <img
+                      <Image
                         src="https://readymadeui.com/images/visa.webp"
                         className="w-12"
                         alt="card1"
                       />
-                      <img
+                      <Image
                         src="https://readymadeui.com/images/american-express.webp"
                         className="w-12"
                         alt="card2"
                       />
-                      <img
+                      <Image
                         src="https://readymadeui.com/images/master.webp"
                         className="w-12"
                         alt="card3"
@@ -183,7 +183,7 @@ const CheckoutPage: React.FC = () => {
                       htmlFor="paypal"
                       className="ml-4 flex gap-2 cursor-pointer"
                     >
-                      <img
+                      <Image
                         src="https://readymadeui.com/images/paypal.webp"
                         className="w-20"
                         alt="paypalCard"
@@ -280,7 +280,7 @@ const CheckoutPage: React.FC = () => {
                       className="grid sm:grid-cols-2 items-start gap-6"
                     >
                       <div className="max-w-[190px] px-4 py-6 shrink-0 bg-gray-200 rounded-md">
-                        <img
+                        <Image
                           src={product.image}
                           className="w-full object-contain"
                           alt={product.name}

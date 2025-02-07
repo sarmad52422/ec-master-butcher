@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ProductInterface } from "@/interfaces/product_iterface";
 import { CLientServices } from "@/services/user";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 const ItemDetails: React.FC = () => {
   const params = useSearchParams();
@@ -68,7 +69,7 @@ const ItemDetails: React.FC = () => {
             ) : (
               <>
                 <div className="h-[460px] rounded-lg mb-4">
-                  <img
+                  <Image
                     className="w-full h-full object-cover"
                     src={product?.images?.[selectedImageIndex] || ""}
                     alt="Product Image"
@@ -81,7 +82,7 @@ const ItemDetails: React.FC = () => {
                       className="w-1/6 cursor-pointer"
                       onClick={() => handleImageClick(index)}
                     >
-                      <img
+                      <Image
                         src={image}
                         alt={`Thumbnail ${index}`}
                         className={`w-full h-16 object-cover border ${

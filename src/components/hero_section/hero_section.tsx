@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import the carousel CSS
 import styles from "./hero_section.module.css"; // Import your custom styles
+import Image from "next/image";
 
 const HeroSection: React.FC = () => {
   const images: string[] = [
@@ -24,7 +25,7 @@ const HeroSection: React.FC = () => {
       >
         {images.map((src, index) => (
           <div key={index}>
-            <img src={src} alt={`Slide ${index + 1}`} className="rounded-lg" />
+            <Image src={src} alt={`Slide ${index + 1}`} className="rounded-lg" />
           </div>
         ))}
       </Carousel>

@@ -9,6 +9,7 @@ import {
 } from "@/redux/features/global_actions";
 import { CLientServices } from "@/services/user";
 import { ProductInterface } from "@/interfaces/product_iterface";
+import Image from "next/image";
 
 interface CartItem extends Omit<ProductInterface, "units" & "tags"> {
   quantity: number;
@@ -132,7 +133,7 @@ const CartSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
               >
                 <div className="flex *:max-sm:flex-col gap-6">
                   <div className="h-40 bg-gray-100 p-4 rounded">
-                    <img
+                    <Image
                       src={item.images?.[0]}
                       className="w-full h-full object-contain shrink-0"
                       alt={item.name}

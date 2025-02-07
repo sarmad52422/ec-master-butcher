@@ -8,6 +8,7 @@ import ViewCart from "./components/view_cart";
 import { useEffect, useState } from "react";
 import icon from "../../../public/images/main_icon.png";
 import Image from "next/image";
+import Link from "next/link";
 
 const Navbar: React.FC = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -51,12 +52,12 @@ const Navbar: React.FC = () => {
             </div>
           </div>
           <div>
-            <a
+            <Link
               className="btn btn-ghost text-xl lg:text-2xl ml-2 lg:ml-0"
               href="/"
             >
               <Image src={icon} alt="logo" width={250} height={50} />
-            </a>
+            </Link>
           </div>
           <div className="hidden lg:flex">
             <SearchBar />

@@ -3,6 +3,7 @@ import React from "react";
 import { useAppDispatch } from "@/redux/hooks";
 import { onItemAdded } from "@/redux/features/global_actions";
 import { ProductInterface } from "@/interfaces/product_iterface";
+import Image from "next/image";
 
 interface ProductGridProps {
   products: ProductInterface[];
@@ -53,7 +54,7 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
                   }}
                 >
                   <figure>
-                    <img
+                    <Image
                       src={product.images?.[0]}
                       alt="Meat"
                       className="md:h-56 md:w-80 sm:h-40 sm:w-64 rounded-lg"

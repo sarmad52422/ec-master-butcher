@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const ProfileIcon = ({ logoutHandler }: any) => {
   return (
     <div>
@@ -8,7 +10,7 @@ const ProfileIcon = ({ logoutHandler }: any) => {
           className="btn btn-ghost btn-circle avatar"
         >
           <div className="w-6 rounded-full">
-            <img
+            <Image
               alt="Tailwind CSS Navbar component"
               src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             />
