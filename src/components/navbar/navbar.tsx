@@ -12,7 +12,7 @@ import Link from "next/link";
 
 const Navbar: React.FC = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [scrollingDown, setScrollingDown] = useState(true);
+  const [scrollingDown, setScrollingDown] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,14 +31,14 @@ const Navbar: React.FC = () => {
   const navbarHeight = 100;
 
   const navbarStyle: React.CSSProperties = {
-    top: scrollingDown ? `-${navbarHeight}px` : "0",
+    top: scrollingDown ? `-${navbarHeight}px` : "0", // If scrolling down, navbar hides, else it shows
     position: "fixed",
     zIndex: 10,
     transition: "top 0.3s ease-in-out",
   };
 
   const contentStyle: React.CSSProperties = {
-    paddingTop: scrollingDown ? `${navbarHeight}px` : "0",
+    paddingTop: scrollingDown ? `${navbarHeight}px` : "0", // Adjust content to avoid being hidden under the navbar
   };
 
   return (
@@ -82,4 +82,5 @@ const Navbar: React.FC = () => {
     </div>
   );
 };
+
 export default Navbar;

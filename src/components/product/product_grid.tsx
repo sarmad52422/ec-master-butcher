@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch } from "@/redux/hooks";
 import { onItemAdded } from "@/redux/features/global_actions";
 import { ProductInterface } from "@/interfaces/product_iterface";
@@ -11,10 +11,19 @@ interface ProductGridProps {
 }
 
 const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
+  const [isClient, setIsClient] = useState(false); // Track if it's the client-side
   const dispatcher = useAppDispatch();
+
+  useEffect(() => {
+    setIsClient(true); // Set isClient to true once the component mounts
+  }, []);
+
   const addProductToCart = (id: string) => {
     dispatcher(onItemAdded(id));
   };
+
+  // Only render after hydration is complete (client-side)
+  if (!isClient) return null;
 
   return (
     <div className="mt-6">
@@ -32,9 +41,9 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
                   <h2 className="card-title">
                     <div className="skeleton h-6 w-56"></div>
                   </h2>
-                  <p>
+                  <div>
                     <div className="skeleton h-4 w-full"></div>
-                  </p>
+                  </div>
                   <div className="card-actions justify-between items-center mt-2 sm:w-52 md:w-60">
                     <div className="skeleton h-6 w-24"></div>
                     <div className="skeleton h-6 w-24"></div>

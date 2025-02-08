@@ -17,10 +17,10 @@ const Product: React.FC = () => {
       try {
         if (category) {
           const productData = await CLientServices.getProductByCategory(
-            category.toLowerCase()
+            category.toLowerCase(),
           );
-          setProducts(productData.data.products);
-          console.log(productData.data.products);
+          setProducts(productData?.data?.products);
+          console.log(productData);
         } else {
           console.error("Category is null");
         }
